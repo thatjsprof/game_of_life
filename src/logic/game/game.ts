@@ -124,7 +124,6 @@ class Games {
   protected runGame(value: number) {
     let boardToCheck;
     let finalBoard = this.createBoard(this.finalSetup);
-    console.log(finalBoard);
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.columns; j++) {
         boardToCheck = this.checkCellStatus(i, j, value);
@@ -138,7 +137,6 @@ class Games {
       }
     }
     this.finalBoard[0][0] = true;
-    console.log(finalBoard, this.finalBoard);
     if (value === 0) return [boardToCheck, finalBoard];
     return finalBoard;
   }
