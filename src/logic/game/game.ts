@@ -1,9 +1,14 @@
 import BusinessRules from "../rules/rules";
 
-class Games {
+interface GamesInterface {
+  createBoard: (setup: { [x: string]: Array<number> }) => multiDimension
+  init: () => multiDimension
+}
+
+class Games implements GamesInterface {
   private rows: number;
   private columns: number;
-  private step: number;
+  public step: number;
   private setup: { [x: string]: Array<number> } = {};
   private finalSetup: { [x: string]: Array<number> } = {};
   private finalBoard: multiDimension;
@@ -136,7 +141,6 @@ class Games {
         this.tempBoard[i][j] = this.finalBoard[i][j];
       }
     }
-    this.finalBoard[0][0] = true;
     if (value === 0) return [boardToCheck, finalBoard];
     return finalBoard;
   }
