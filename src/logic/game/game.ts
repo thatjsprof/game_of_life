@@ -1,8 +1,8 @@
 import BusinessRules from "../rules/rules";
 
 interface GamesInterface {
-  createBoard: (setup: { [x: string]: Array<number> }) => multiDimension
-  init: () => multiDimension
+  createBoard: (setup: { [x: string]: Array<number> }) => multiDimension;
+  init: () => multiDimension;
 }
 
 class Games implements GamesInterface {
@@ -81,11 +81,7 @@ class Games implements GamesInterface {
   }
 
   protected checkCellStatus = (x: number, y: number, value: number) => {
-    for (let i = 0; i < this.rows; i++) {
-      for (let j = 0; j < this.columns; j++) {
-        this.finalBoard[i][j] = this.tempBoard[i][j];
-      }
-    }
+    this.swapValues(this.finalBoard, this.tempBoard);
 
     const newboard =
       value === 0 ? this.createBoard(this.setup) : this.finalBoard;
@@ -126,6 +122,14 @@ class Games implements GamesInterface {
     return x;
   }
 
+  protected swapValues(array1: any, array2: any) {
+    for (let i = 0; i < this.rows; i++) {
+      for (let j = 0; j < this.columns; j++) {
+        array1[i][j] = array2[i][j];
+      }
+    }
+  }
+
   protected runGame(value: number) {
     let boardToCheck;
     let finalBoard = this.createBoard(this.finalSetup);
@@ -135,12 +139,9 @@ class Games implements GamesInterface {
         finalBoard[i][j] = boardToCheck[i][j];
       }
     }
-    for (let i = 0; i < this.rows; i++) {
-      for (let j = 0; j < this.columns; j++) {
-        this.finalBoard[i][j] = finalBoard[i][j];
-        this.tempBoard[i][j] = this.finalBoard[i][j];
-      }
-    }
+
+    this.swapValues(this.tempBoard, finalBoard);
+
     if (value === 0) return [boardToCheck, finalBoard];
     return finalBoard;
   }
